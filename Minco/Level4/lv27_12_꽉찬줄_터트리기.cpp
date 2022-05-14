@@ -1,9 +1,12 @@
 #include <iostream>
+#include <cstring>
+#include <vector>
 
 using namespace std;
 
 int m[5][4];
-int bomb_line;
+vector<int> bomb_line;
+int temp[4];
 
 void input() {
 	for (int y = 0; y < 5; y++) {
@@ -27,20 +30,25 @@ void find() {
 		}
 		if (cnt == 4) {
 			bomb(y);
-			bomb_line++;
+			bomb_line.push_back(y);
 		}
 	}
 }
 
 void find_remain() {
-	for (int y = 4; y >= 0; y--) {
-		for (int x = 3; x >= 0; x--) {
-			if (m[y][x] == 1) {
-				int dy = y + bomb_line;
-				if (dy >= 5)continue;
-				m[dy][x] = m[y][x];
-				m[y][x] = 0;
+	while (!bomb_line.empty()) {
+		memcpy(temp, m[bomb_line.back()], 4);
+		for (int y = bomb_line.back()-1; y >= 0; y--) {
+			for (int x = 0; x < 4; x++) {
+				m[y + 1][x] = m[y][x];
 			}
+		}
+		for (int x = 0; x < 4; x++) {
+			m[0][x] = temp[x];
+		}
+		bomb_line.pop_back();
+		for (int i = 0; i < bomb_line.size(); i++) {
+			bomb_line[i]++;
 		}
 	}
 }
@@ -55,6 +63,8 @@ void answer() {
 }
 
 int main() {
+
+	//freopen_s(new FILE*, "input.txt", "r", stdin);
 	input();
 	find();
 	find_remain();
