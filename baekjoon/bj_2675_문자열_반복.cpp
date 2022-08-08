@@ -2,23 +2,29 @@
 #include <string>
 using namespace std;
 
-int num;
-string input_num;
-int sum;
+int T, R;
+string S;
+
+void answer() {
+	for (int i = 0; i < S.length(); i++) {
+		for (int j = 0; j < R; j++) {
+			cout << S[i];
+		}
+	}
+}
 
 void input() {
-	cin >> num >> input_num;
+	cin >> T;
+	for (int i = 0; i < T; i++) {
+		cin >> R >> S;
+		answer();
+		cout << '\n';
+	}
 }
 
 void sol() {
 	input();
-	for (int i = 0; i < num; i++) {
-		//sum += input_num % 10;
-		//input_num = input_num / 10;
-		char ch = input_num[i];
-		sum += int(ch - '0');
-	}
-	cout << sum;
+
 }
 
 int main() {
