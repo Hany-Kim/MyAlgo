@@ -4,9 +4,9 @@
 #include <cstring>
 using namespace std;
 
-#define R_MAX 20 + 1
-#define C_MAX 20 + 1
-#define WALL_MAX 42
+#define R_MAX (20 + 1)
+#define C_MAX (20 + 1)
+#define WALL_MAX 21
 #define FOR(i,s,e) for(int i=s; i<e; ++i)
 
 int R, C, K;
@@ -23,7 +23,7 @@ int dx[5] = { 0,1,-1,0,0 };
 int sdy[5][3] = { {0,0,0}, {-1,0,1},{-1,0,1},{-1,-1,-1},{1,1,1} };
 int sdx[5][3] = { {0,0,0},{1,1,1},{-1,-1,-1},{-1,0,1},{-1,0,1} };
 int W;
-int wall[WALL_MAX][WALL_MAX];
+int wall[R_MAX * 2][C_MAX * 2];
 int temper[R_MAX][C_MAX];
 int h_cnt;
 int t_cnt;
