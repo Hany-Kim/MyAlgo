@@ -20,8 +20,6 @@ NODE heater[410];
 NODE target[410];
 int dy[5] = { 0,0,0,-1,1 }; // 동 서 북 남
 int dx[5] = { 0,1,-1,0,0 };
-int sdy[5][3] = { {0,0,0}, {-1,0,1},{-1,0,1},{-1,-1,-1},{1,1,1} };
-int sdx[5][3] = { {0,0,0},{1,1,1},{-1,-1,-1},{-1,0,1},{-1,0,1} };
 int W;
 int wall[R_MAX * 2][C_MAX * 2];
 int temper[R_MAX][C_MAX];
@@ -230,7 +228,6 @@ void sol() {
 		eat_chocolate();
 		if (chocolate > 100) {
 			chocolate = 101;
-			//chocolate = -1;
 			break;
 		}
 	}
@@ -244,22 +241,14 @@ int main() {
 
 	//freopen("input.txt", "r", stdin);
 	cin >> R >> C >> K;
-	/*cin >> R >> W >> K;
-	C = R;*/
 	FOR(y, 1, (R + 1)) {
 		FOR(x, 1, (C + 1)) {
 			cin >> map[y][x];
 			if (map[y][x] == 5) {
-			/*if (map[y][x] == 1) {
-				map[y][x] = 5;*/
 				target[t_cnt].y = y;
 				target[t_cnt++].x = x;
 			}
 			else if (map[y][x] != 0) {
-				/*if (map[y][x] == 2) map[y][x] = 2;
-				if (map[y][x] == 3) map[y][x] = 3;
-				if (map[y][x] == 4) map[y][x] = 1;
-				if (map[y][x] == 5) map[y][x] = 4;*/
 				heater[h_cnt].y = y;
 				heater[h_cnt].x = x;
 				heater[h_cnt++].d = map[y][x];
@@ -277,7 +266,6 @@ int main() {
 		}
 		else if (d == 1) {
 			wall[y][x + 1] = 1;
-			//wall[y][x - 1] = 1;
 		}
 	}
 
