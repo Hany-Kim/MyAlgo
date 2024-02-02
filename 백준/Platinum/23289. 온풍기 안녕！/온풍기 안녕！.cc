@@ -51,84 +51,45 @@ void blow_from_heater(int num) {
 	used[sy][sx] = 1;
 	q.push(make_pair(sy, sx));
 
-	
-	if (now_heater->d == 1 || now_heater->d == 2) {
-		while (!q.empty()) {
-			pair<int, int> now = q.front();
-			q.pop();
+	while (!q.empty()) {
+		pair<int, int> now = q.front();
+		q.pop();
 
-			FOR(i, 1, 5) {
-				if (now_heater->d == 1 && i == 2) continue;
-				else if (now_heater->d == 2 && i == 1) continue;
+		FOR(i, 1, 5) {
+			if (now_heater->d == 1 && i == 2) continue;
+			else if (now_heater->d == 2 && i == 1) continue;
+			else if (now_heater->d == 3 && i == 4) continue;
+			else if (now_heater->d == 4 && i == 3) continue;
 
-				int ty = (now.first * 2) - 1 + dy[i];
-				int tx = (now.second  * 2) - 1 + dx[i];
+			int ty = (now.first * 2) - 1 + dy[i];
+			int tx = (now.second  * 2) - 1 + dx[i];
+			if (ty < 1 || ty >((R * 2) - 1) || tx < 1 || tx >((C * 2) - 1)) continue;
+			if (wall[ty][tx] == 1) continue; // 벽에 막혔다면
+
+			int ny = now.first + dy[i];
+			int nx = now.second + dx[i];
+			if (i != now_heater->d) {
+				ty = (ny * 2) - 1 + dy[now_heater->d];
+				tx = (nx * 2) - 1 + dx[now_heater->d];
 				if (ty < 1 || ty >((R * 2) - 1) || tx < 1 || tx >((C * 2) - 1)) continue;
 				if (wall[ty][tx] == 1) continue; // 벽에 막혔다면
 
-				int ny = now.first + dy[i];
-				int nx = now.second + dx[i];
-				if (i != now_heater->d) {
-					ty = (ny * 2) - 1 + dy[now_heater->d];
-					tx = (nx * 2) - 1 + dx[now_heater->d];
-					if (ty < 1 || ty >((R * 2) - 1) || tx < 1 || tx >((C * 2) - 1)) continue;
-					if (wall[ty][tx] == 1) continue; // 벽에 막혔다면
-
-					ny = ny + dy[now_heater->d];
-					nx = nx + dx[now_heater->d];
-				}
-
-				if (ny < 1 || ny > R || nx < 1 || nx > C) continue;
-				if (heater_map[ny][nx] != 0) continue;
-				if (used[ny][nx] != 0) continue;
-
-				if ((heater_map[now.first][now.second] - 1) < 1) continue;
-				heater_map[ny][nx] = heater_map[now.first][now.second] - 1;
-				used[ny][nx] = 1;
-				q.push(make_pair(ny, nx));
+				ny = ny + dy[now_heater->d];
+				nx = nx + dx[now_heater->d];
 			}
-		}
-	}
-	else if (now_heater->d == 3 || now_heater->d == 4) {
-		while (!q.empty()) {
-			pair<int, int> now = q.front();
-			q.pop();
 
-			FOR(i, 1, 5) {
-				if (now_heater->d == 3 && i == 4) continue;
-				else if (now_heater->d == 4 && i == 3) continue;
+			if (ny < 1 || ny > R || nx < 1 || nx > C) continue;
+			if (heater_map[ny][nx] != 0) continue;
+			if (used[ny][nx] != 0) continue;
 
-				int ty = (now.first * 2) - 1 + dy[i];
-				int tx = (now.second * 2) - 1 + dx[i];
-				if (ty < 1 || ty >((R * 2) - 1) || tx < 1 || tx >((C * 2) - 1)) continue;
-
-				if (wall[ty][tx] == 1) continue; // 벽에 막혔다면
-				int ny = now.first + dy[i];
-				int nx = now.second + dx[i];
-				if (i != now_heater->d) {
-					ty = (ny * 2) - 1 + dy[now_heater->d];
-					tx = (nx * 2) - 1 + dx[now_heater->d];
-					if (ty < 1 || ty >((R * 2) - 1) || tx < 1 || tx >((C * 2) - 1)) continue;
-
-					if (wall[ty][tx] == 1) continue; // 벽에 막혔다면
-					ny = ny + dy[now_heater->d];
-					nx = nx + dx[now_heater->d];
-				}
-
-				if (ny < 1 || ny > R || nx < 1 || nx > C) continue;
-				if (heater_map[ny][nx] != 0) continue;
-				if (used[ny][nx] != 0) continue;
-
-				if ((heater_map[now.first][now.second] - 1) < 1) continue;
-				heater_map[ny][nx] = heater_map[now.first][now.second] - 1;
-				used[ny][nx] = 1;
-				q.push(make_pair(ny, nx));
-			}
+			if ((heater_map[now.first][now.second] - 1) < 1) continue;
+			heater_map[ny][nx] = heater_map[now.first][now.second] - 1;
+			used[ny][nx] = 1;
+			q.push(make_pair(ny, nx));
 		}
 	}
 
 	add_heaterMap_to_temper(heater_map);
-	int de = 1;
 }
 
 void control_temper() {
@@ -239,7 +200,6 @@ int main() {
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	//freopen("input.txt", "r", stdin);
 	cin >> R >> C >> K;
 	FOR(y, 1, (R + 1)) {
 		FOR(x, 1, (C + 1)) {
