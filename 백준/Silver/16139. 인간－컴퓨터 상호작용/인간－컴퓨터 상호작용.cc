@@ -4,7 +4,7 @@ using namespace std;
 
 string str;
 int N;
-int arr[26][2000];
+int arr[26][200000];
 
 void solution() {
 	cin >> str >> N;
@@ -13,8 +13,11 @@ void solution() {
 		char now = str[j];
 		int idx = int(now - 'a');
 
-		for (int i = j; i < str.size(); ++i) {
-			arr[idx][i] += 1;
+		for (int i = 0; i < 26; ++i) {
+			if (idx == i) {
+				arr[i][j] += 1;
+			}
+			if(j != 0) arr[i][j] += arr[i][j - 1];
 		}
 	}
 	for (int i = 0; i < N; ++i) {
