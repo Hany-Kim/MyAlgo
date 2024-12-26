@@ -8,11 +8,10 @@ int solution(int a, int b, int n) {
 
     int cnt = 0;
     int num = n;
-    int mod = 0;
 
     while (1) {
         int bundle = num / a;
-        int tmpMod = num % a;
+        int mod = num % a;
 
         num = num - (bundle * a) + (bundle * b);
 
