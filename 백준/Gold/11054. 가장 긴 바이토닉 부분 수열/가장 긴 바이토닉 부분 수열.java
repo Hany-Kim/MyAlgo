@@ -30,10 +30,6 @@ public class Main {
                     // 그대로 인지, 내림차순 이어지는 지점 인지, 내림차순으로 변경된지점인지
                     dp[1][i] = Math.max(dp[1][i], Math.max(dp[1][j] + 1, dp[0][j] + 1));
                 }
-                else if(arr[i] == arr[j]){
-                    dp[0][i] = Math.max(dp[0][i], dp[0][j]);
-                    dp[1][i] = Math.max(dp[1][i], dp[1][j]);
-                }
             }
         }
 
