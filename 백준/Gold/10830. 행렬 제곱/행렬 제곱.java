@@ -23,28 +23,15 @@ public class Main {
                 matrixA[i][j] = Integer.parseInt(st.nextToken());
             }
         }
+        
+        int[][] ans = func(matrixA, b);
 
-        if (b == 1){
-            for(int y=0; y<n; y++){
-                for(int x=0; x<n; x++){
-                    int num = matrixA[y][x] % mod;
-                    bw.write(num + " ");
-                }
-                bw.write("\n");
+        for(int y=0; y<n; y++){
+            for(int x=0; x<n; x++){
+                bw.write(ans[y][x] + " ");
             }
+            bw.write("\n");
         }
-        else {
-            int[][] ans = func(matrixA, b);
-
-            for(int y=0; y<n; y++){
-                for(int x=0; x<n; x++){
-                    bw.write(ans[y][x] + " ");
-                }
-                bw.write("\n");
-            }
-        }
-
-
 
         bw.flush();
         bw.close();
@@ -53,7 +40,14 @@ public class Main {
 
     private static int[][] func(int[][] now, Long b) {
         if(b == 1){
-            return matrixA;
+            int[][] temp = new int[n][n];
+
+            for(int y=0; y<n; y++){
+                for(int x=0; x<n; x++){
+                    temp[y][x] = matrixA[y][x] % mod;
+                }
+            }
+            return temp;
         }
 
         int[][] newMatrix = func(now, b / 2);
