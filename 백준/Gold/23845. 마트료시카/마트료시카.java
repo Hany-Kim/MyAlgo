@@ -10,8 +10,6 @@ public class Main {
     static Set<Integer> set = new TreeSet<>();
 
     public static void main(String[] args) throws IOException {
-        //br = new BufferedReader(new FileReader("input.txt"));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
 
@@ -29,8 +27,6 @@ public class Main {
         for(int i=1; i<maxNum + 1; i++){
             int now = 0;
             int cnt = 0;
-//            for(int j=1; j<100001; j++){
-
             for(Integer j : set){
                 if(arr[j] < i) continue;
 
