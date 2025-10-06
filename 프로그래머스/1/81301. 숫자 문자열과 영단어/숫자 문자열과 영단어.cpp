@@ -1,13 +1,16 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <iostream>
+
 using namespace std;
 
-unordered_map<string, int> um;
+unordered_map<string,int> um;
 
 int solution(string s) {
-    long long answer = 0;
+    int answer = 0;
     
+    // str : int 매핑
     um["zero"] = 0;
     um["one"] = 1;
     um["two"] = 2;
@@ -19,32 +22,30 @@ int solution(string s) {
     um["eight"] = 8;
     um["nine"] = 9;
     
-    for(int i=0; i<s.size(); ++i){
-        string str = "";
-        
-        for(int j=i; j<s.size(); ++j){
-            if(s[j] >= '0' && s[j] <= '9'){
-                answer += int(s[j] - '0');
-                answer *= 10;
-                i = j;
-                break;
-            } else {
-                str += s[j];
+    string str_num = "";
+    for(int i=0; i<s.size(); i++){
+        if((int(s[i] - '0') >= 0) && (int(s[i] - '0') <= 9)){
+            answer *= 10;
+            answer += int(s[i] - '0');
+        }
+        else {
+            str_num += s[i];
             
-                unordered_map<string,int>::iterator itr = um.find(str);
-                if(um.end() != itr){
-                    answer += um[str];
-                    answer *= 10;
-                    str = "";
-                    i = j;
-                    break;
-                }
-            }
+            // key확인
+            unordered_map<string,int>::iterator itr = um.find(str_num);
+            
+            if (itr != um.end()) {
+                answer *= 10;
+				answer += um[str_num];
+                
+                str_num = "";
+			}
+			else {
+                continue;
+			}
         }
     }
     
-    answer /= 10;
     
-    int ans = int(answer);
-    return ans;
+    return answer;
 }
